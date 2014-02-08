@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block body %}	
+
+	action_calm <div id="action_calm" class='movie_slider' style='width:150px'></div><br/>
+	happy_sad <div id="happy_sad" class='movie_slider' style='width:150px'></div><br/>
+	cult_trash <div id="cult_trash" class='movie_slider' style='width:150px'></div><br/>
+	unknwon_famous <div id="un_fa" class='movie_slider' style='width:150px'></div><br/>
+	{{ STATIC_URL }}
+	<!--start: Wrapper-->
+	<div id="wrapper">
+				
+		<!--start: Container -->
+    	<div class="container">
+			<hr>
+			<!-- start: Portfolio -->
+				<div id="portfolio-wrapper" class="row">
+					{% for element in content %}
+						{% ifequal element.type 'comment'%}	
+							<div class="span4 portfolio-item">
+								<div class="quotes">
+									<div class="quote">
+									“That’s not what we think design is. It’s not just what it looks like and feels like. Design is how it works”
+									</div>
+									<div class="author">
+										- Steve Jobs -
+									</div>	
+								</div>
+							</div>
+						{% endifequal %}
+						{% ifequal element.type 'movie'%}	
+							<div class="span4 portfolio-item">
+								<div class="picture"><a href="img/photo9.jpg" rel="image" title="Title"><img src="img/photo9.jpg" alt=""/><div class="image-overlay-zoom"></div></a>
+									<div class="post-meta"><span><i class="mini-ico-calendar"></i>1 June 2011</span> <span><i class="mini-ico-user"></i> <a href="#">lucas</a></span> <span><i class="mini-ico-comment"></i><a href="#">89 comments</a></span></div>
+								</div>
+							</div>
+						{% endifequal %}
+						{% ifequal element.type 'movie_with_comment'%}
+							<div class="span4 portfolio-item">
+								<div class="picture"><a href="project.html" title="Title"><img src="img/photo5.jpg" alt=""/><div class="image-overlay-link"></div></a>
+									<div class="item-description alt">
+										<h5><a href="project.html">Project no. 5</a></h5>
+										<p>
+										Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+										</p>
+									</div>
+									<div class="post-meta"><span><i class="mini-ico-calendar"></i>1 June 2011</span> <span><i class="mini-ico-user"></i> <a href="#">lucas</a></span> <span><i class="mini-ico-comment"></i><a href="#">89 comments</a></span></div>	
+								</div>
+							</div>	
+						{% endifequal %}
+					{% endfor %}
+				</div>
+		</div>
+		<!--end: Container-->
+	
+	</div>
+	<!-- end: Wrapper  -->	
+	<script type="text/javascript">
+		var ac_ca = 5
+		var ha_sa = 5
+		var cu_tr = 5
+		var un_fa = 5
+		function call_ajax(){
+			$.ajax({
+				url: {% url "search_movie" %},
+				data: {	
+							ac_ca: ac_ca,
+							ha_sa: ha_sa,
+							cu_tr: cu_tr,
+							un_fa: un_fa,},
+				success: function(msg){
+					console.log(msg)
+				}
+			});
+		}
+		$('.movie_slider').slider().on('slide', function(ev){
+			var id = $(this).attr('id')
+			if(id == 'happy_sad')
+				ha_sa = ev.value
+			else if (id == 'action_calm')
+				ac_ca = ev.value
+			else if (id == 'cult_trash')
+				cult_trash = ev.value
+			else if (id == 'un_fa')
+				un_fa = ev.value
+
+			call_ajax()
+		});
+	</script>
+{% endblock %}

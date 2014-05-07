@@ -7,6 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
+    
     # url(r'^$', 'quefilme.views.home', name='home'),
     # url(r'^quefilme/', include('quefilme.foo.urls')),
     (r'^login$', 'django.contrib.auth.views.login'), 

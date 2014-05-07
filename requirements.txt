@@ -2,6 +2,7 @@ django== 1.5
 south == 0.7.6
 easy_thumbnails
 PIL
+simplejson
 django-ratings == 0.3.7
 #django_facebook
 -e git+https://@github.com/tschellenbach/Django-facebook.git#egg=django_facebook

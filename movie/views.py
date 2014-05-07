@@ -20,20 +20,38 @@ def search_movie(request):
 	if request.is_ajax():
 		r = []
 		for obj in request.GET:
-			print obj
+			print '****'
 			if request.GET[obj] != '':
+
 				value = request.GET[obj]
-				categories = obj.split('_')[1]
-				if value<5:
-					categories = obj.split('_')[0]
+				print value
+				categories_up = obj.split('_')[1]
+				categories_down = obj.split('_')[0]
+				value_up = int(value)
+				value_down = 10 - int(value)
+				
+
 					
-				up = int(value)*10 + 10
-				down = int(value)*10 - 10
-				rates = Rate.objects.filter(category=categories, rate__gt = down, rate__lt = up)
-				for rate in rates:
-					r.append({'id': rate.film.id, 'title': rate.film.title}) 
+				up_up = int(value_up)*10 + 10
+				down_up = int(value_up)*10 - 10
+
+				up_down = int(value_down)*10 + 10
+				down_down = int(value_down)*10 - 10
+				print '.......'
+				print up_down
+				print down_down
+				print categories_down
+				print '--------'
+				rates_up = Rate.objects.filter(category=categories_up, rate__gt = down_up, rate__lt = up_up)
+				rates_down = Rate.objects.filter(category=categories_down, rate__gt = down_down, rate__lt = up_down)
+				
+				for rate in rates_up:
+					r.append({'id': rate.film.id, 'title': rate.film.title})
+				for rate in rates_down:
+					r.append({'id': rate.film.id, 'title': rate.film.title})  
 		print r
 		response_data = r
+		print response_data
 		return HttpResponse(json.dumps(response_data), content_type="application/json")
 	else:
 		movies = Movie.objects.all().order_by('-creation_date')[:5]
